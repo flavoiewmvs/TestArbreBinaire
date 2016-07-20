@@ -16,41 +16,24 @@ public class TestArbreBinaire {
      */
     public static void main(String[] args) {
         /**
-         *                 10
-         *               /    \
-         *              2      20
-         *             / \    /  \
-         *               4   14  
-         *                     \
-         *                      19
+         * 10 / \ 5 22 / \ 20 27 / 15 / 11 \ 12
          */
-//        ABR monArbre = new ABR(10);
-//        monArbre.inserer(20);
-//        monArbre.inserer(2);
-//        monArbre.inserer(14);
-//        monArbre.inserer(4);
-//        monArbre.inserer(19);
+        ABR monArbre = new ABR(10);
+        monArbre.inserer(7);
+        monArbre.inserer(12);
+        monArbre.inserer(4);
+        monArbre.inserer(8);
+        monArbre.inserer(2);
+        monArbre.inserer(5);
+        monArbre.inserer(15);
+        monArbre.inserer(13);
 //        System.out.println(monArbre.taille());
-        int test [] = {12, 4, 7, 3, 6, 8, 2, 10, 9};
-        triinsertion(test);
+        monArbre.ParcoursPrefixe();
+        System.out.println();
+        monArbre.ParcoursSuffixe();
+        System.out.println();
+        monArbre.ParcoursInfixe();
+//        monArbre.supprimer(10);
+//        System.out.println(monArbre.taille());
     }
-    public static void triinsertion (int []tab){
-    int cpt;
-    int element;
- 
-    for (int i = 1; i < tab.length ; i++)
-    {    
-        element = tab[i];
-        cpt = i - 1;
-        while (cpt >= 0 && tab[cpt] > element)
-        {
-           tab[cpt + 1] = tab[cpt];
-           cpt--;
-        }
-        tab[cpt + 1] = element;
-    }
-        System.out.println("testarbrebinaire.TestArbreBinaire.triinsertion()");
-            
-}
-
 }

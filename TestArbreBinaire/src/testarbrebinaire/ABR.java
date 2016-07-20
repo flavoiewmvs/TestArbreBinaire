@@ -25,6 +25,18 @@ public class ABR<E extends Comparable<E>> {
         _droite = null;
     }
 
+    public E getElement() {
+        return _element;
+    }
+
+    public ABR<E> getGauche() {
+        return _gauche;
+    }
+
+    public ABR<E> getDroite() {
+        return _droite;
+    }
+
     public ABR<E> inserer(E element) {
         int direction = element.compareTo(_element);
         if (direction < 0) {
@@ -39,51 +51,69 @@ public class ABR<E extends Comparable<E>> {
         return ((_gauche == null) ? 0 : _gauche.taille()) + ((_droite == null) ? 0 : _droite.taille()) + 1;
     }
 
+    protected E elementPlusAGauche() {
+        return (_gauche == null) ? _element : _gauche.elementPlusAGauche();
+    }
+
+    public ABR<E> supprimer(E element) {
+        ABR<E> resultat = this;
+        int direction = element.compareTo(_element);
+        if (direction < 0) {
+            if (_gauche != null) {
+                _gauche = _gauche.supprimer(element);
+            }
+        } else if (direction > 0) {
+            if (_droite != null) {
+                _droite = _droite.supprimer(element);
+            }
+        } else if (_gauche == null) {; // 2 cas >>>
+            resultat = _droite;
+        } else if (_droite == null) {
+            resultat = _gauche;
+
+        } else {
+            _element = _droite.elementPlusAGauche();
+            _droite = _droite.supprimer(_element);
+        }
+        return resultat;
+    }
+
     /**
-     * 10 / \ 2 20 / \ / \ 4 14 \ 19
+     * Affiche l'arbre selon un parcours prefixe
      */
-//    public String[] affiche(int niveau) {
-//        String[] ligne = new String[100]; // ici id/alemeent devions valider nom de niveau
-//        int espace = 16;
-//
-//        if (niveau == 0) {
-//            for (int i = 1; i <= espace; ++i) {
-//                ligne[niveau] += " ";
-//            }
-//            ligne[niveau] += _element;
-//        }
-//
-//        if (_gauche == null) {
-//            for (int i = 1; i <= espace / (niveau + 1); ++i) {
-//                ligne[niveau+1] += " ";
-//            }
-//            ligne[niveau+1] += "xx";
-//            for (int i = 1; i <= espace / (niveau + 1); ++i) {
-//                ligne[niveau+1] += " ";
-//            }
-//        } else {
-//            ligne[niveau+1]=_gauche.affiche(niveau+1);
-//            
-//            
-//            for (int i = 1; i <= espace / (niveau + 1); ++i) {
-//                ligne[niveau] += " ";
-//            }
-//            ligne[niveau] += "xx";
-//            for (int i = 1; i <= espace / (niveau + 1); ++i) {
-//                ligne[niveau] += " ";
-//            }
-//        }
-//        
-//        if (_droite == null) {
-//            for (int i = 1; i <= espace / (niveau + 1); ++i) {
-//                ligne[niveau] += " ";
-//            }
-//            ligne[niveau] += "xx";
-//            for (int i = 1; i <= espace / (niveau + 1); ++i) {
-//                ligne[niveau] += " ";
-//            }
-//        } else {
-//        }
-//        return ligne;
-//    }
+    public void ParcoursPrefixe() {
+        System.out.print(getElement() + ",");
+        if (getGauche() != null) {
+            getGauche().ParcoursPrefixe();
+        }
+        if (getDroite() != null) {
+            getDroite().ParcoursPrefixe();
+        }
+    }
+
+    /**
+     * Affiche l'arbre selon un parcours infixe
+     */
+    public void ParcoursInfixe() {
+        if (getGauche() != null) {
+            getGauche().ParcoursInfixe();
+        }
+        System.out.print(getElement()+",");
+        if (getDroite() != null) {
+            getDroite().ParcoursInfixe();
+        }
+    }
+
+    /**
+     * Affiche l'arbre selon un parcours Suffixe
+     */
+    public void ParcoursSuffixe() {
+        if (getGauche() != null) {
+            getGauche().ParcoursSuffixe();
+        }
+        if (getDroite() != null) {
+            getDroite().ParcoursSuffixe();
+        }
+        System.out.print(getElement() + ",");
+    }
 }
