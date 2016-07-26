@@ -69,10 +69,11 @@ public class TrisFab {
     }
 
     public static <Integer extends Comparable> void triRapide_r(Integer[] tab, int debut, int fin) {
-        int ii = 0;
-        int jj = 0;
-        if (debut < fin) {
-            Integer pivot = tab[0];
+        int ii = 0; //indice gauche
+        int jj = 0; //indice droite
+        Integer pivot = tab[debut];
+        if (debut+1 < fin) {
+//            pivot = tab[0];
             ii = debut + 1;
             jj = fin;
             while (ii < jj) {
@@ -88,15 +89,13 @@ public class TrisFab {
                 ++ii;
                 --jj;
             }
-            Integer temp = tab[0];
-            tab[0] = tab[jj];
+            Integer temp = tab[debut];
+            tab[debut] = tab[jj];
             tab[jj] = temp;
-
+            aff("Debut :" + debut + " Fin :" + fin + " Pivot=" + pivot + ",ii=" + ii + ",jj=" + jj + " >>  ", tab);
+            triRapide_r(tab, debut, ii-1 );
+            triRapide_r(tab, ii-1, fin);
         }
-
-        aff("ii=" + ii + "jj=" + jj + " >>  ", tab);
-        triRapide_r(tab, debut, ii - 1);
-        triRapide_r(tab, ii, fin);
     }
 
     public static <Integer extends Comparable> void triRapide(Integer[] tab) {
