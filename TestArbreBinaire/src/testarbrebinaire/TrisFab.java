@@ -73,27 +73,28 @@ public class TrisFab {
         int jj = 0;
         if (debut < fin) {
             Integer pivot = tab[0];
-//            Integer pivot = tab[(debut + fin) / 2];
-            ii = debut;
+            ii = debut + 1;
             jj = fin;
-            //partition
             while (ii < jj) {
                 while (ii < jj && tab[ii].compareTo(pivot) < 0) {
                     ++ii;
                 }
-                               System.out.println("EB>> ii="+ii+" jj="+jj);
                 while (ii < jj && tab[jj].compareTo(pivot) >= 0) {
                     --jj;
                 }
                 Integer temp = tab[ii];
-                System.out.println("ii="+ii+" jj="+jj+" temp="+temp);
                 tab[ii] = tab[jj];
                 tab[jj] = temp;
-//                ++ii;
-//                --jj;
+                ++ii;
+                --jj;
             }
+            Integer temp = tab[0];
+            tab[0] = tab[jj];
+            tab[jj] = temp;
+
         }
-        aff("ii="+ii+"jj="+jj+" >>  ", tab);
+
+        aff("ii=" + ii + "jj=" + jj + " >>  ", tab);
         triRapide_r(tab, debut, ii - 1);
         triRapide_r(tab, ii, fin);
     }
@@ -101,7 +102,6 @@ public class TrisFab {
     public static <Integer extends Comparable> void triRapide(Integer[] tab) {
         triRapide_r(tab, 0, tab.length - 1);
     }
-
 
     public static void main(String[] args) {
         Integer[] liste1 = {11, 8, 6, 3, 10, 1, 9, 5, 7, 2, 14, 4, 15, 13, 12};
